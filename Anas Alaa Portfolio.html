@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anas Alaa — .NET Backend Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #16161a;
+      --surface: #1e1e24;
+      --border: #2a2a32;
+      --accent: #6ee7a0;
+      --accent2: #67d8ef;
+      --text: #c8c8d0;
+      --muted: #7f7f90;
+      --card: #1c1c22;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(13,13,15,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--accent); letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── LAYOUT ── */
+    main { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 80px 0 40px; }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(74,222,128,.08);
+      color: var(--accent);
+      border: 1px solid rgba(74,222,128,.25);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 14px;
+      margin-bottom: 22px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    #hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(34px, 6vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+    #hero h1 span { color: var(--accent); }
+    #hero p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+    .chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      font-family: 'Syne', sans-serif;
+    }
+    .hero-meta { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+    .hero-meta span { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+    .hero-meta span::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+    /* ── SECTION HEADING ── */
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .about-card h4 { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .about-card p { font-size: 13px; color: var(--muted); }
+    .about-quote {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .cv-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #0d0d0f;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 11px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity .2s, transform .15s;
+    }
+    .cv-btn:hover { opacity: .85; transform: translateY(-1px); }
+
+    /* ── ABOUT BIO ── */
+    .about-bio { margin-bottom: 28px; }
+    .about-bio p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .edu-degree { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+    .edu-school { color: var(--accent2); font-size: 14px; margin-bottom: 2px; }
+    .edu-uni { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+    .edu-date { font-size: 12px; color: var(--muted); }
+    .edu-badge {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      opacity: .25;
+      flex-shrink: 0;
+    }
+    .edu-desc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent2);
+      border-radius: 10px;
+      padding: 18px 22px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .skill-row { display: flex; flex-direction: column; gap: 6px; }
+    .skill-meta { display: flex; justify-content: space-between; font-size: 13px; }
+    .skill-name { color: var(--text); font-weight: 500; }
+    .skill-pct { color: var(--accent); font-family: 'Syne', sans-serif; font-size: 12px; }
+    .bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1s ease; }
+    .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .tool-badge {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── EXPERIENCE ── */
+    .timeline { border-left: 2px solid var(--border); padding-left: 24px; }
+    .tl-item { position: relative; margin-bottom: 32px; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -31px; top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+    .tl-role { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 2px; }
+    .tl-org { color: var(--accent2); font-size: 13px; margin-bottom: 4px; }
+    .tl-date { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+    .tl-list { list-style: none; }
+    .tl-list li { font-size: 13px; color: var(--muted); margin-bottom: 5px; padding-left: 14px; position: relative; }
+    .tl-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 11px; }
+    .tl-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tl-chip {
+      background: rgba(34,211,238,.06);
+      border: 1px solid rgba(34,211,238,.2);
+      color: var(--accent2);
+      padding: 3px 10px; border-radius: 5px; font-size: 11px; font-weight: 500;
+    }
+
+    /* ── PROJECTS ── */
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 16px;
+      transition: border-color .2s;
+    }
+    .project-card:hover { border-color: rgba(74,222,128,.35); }
+    .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .project-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; }
+    .project-status {
+      font-size: 11px; font-weight: 600;
+      background: rgba(74,222,128,.1);
+      color: var(--accent);
+      border: 1px solid rgba(74,222,128,.2);
+      border-radius: 20px; padding: 3px 10px;
+    }
+    .project-date { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+    .project-desc { font-size: 14px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+
+    /* ── ACHIEVEMENTS ── */
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .cert-icon { font-size: 28px; flex-shrink: 0; }
+    .cert-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+    .cert-org { color: var(--accent2); font-size: 13px; margin-bottom: 2px; }
+    .cert-date { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+    .cert-topics { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cert-topic {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 5px;
+      font-size: 11px; color: var(--muted);
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 80px 0;
+    }
+    #contact h2 { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; letter-spacing: -1px; margin-bottom: 10px; }
+    #contact p { color: var(--muted); margin-bottom: 32px; }
+    .contact-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 22px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      transition: border-color .2s, color .2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-link .icon { font-size: 16px; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media(max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 16px; }
+      .about-grid, .skills-grid { grid-template-columns: 1fr; }
+      .contact-links { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AA.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1>Anas Alaa<br/><span>Alganainy</span></h1>
+    <p>Turning ideas into scalable backend systems. .NET Backend Developer who enjoys building clean, reliable, and real-world web applications.</p>
+    <div class="hero-chips">
+      <span class="chip">C#</span>
+      <span class="chip">.NET</span>
+      <span class="chip">SQL</span>
+      <span class="chip">OOP</span>
+      <span class="chip">REST APIs</span>
+      <span class="chip">Git</span>
+    </div>
+    <div class="hero-meta">
+      <span>Benha University — 2026</span>
+      <span>Cairo, Egypt</span>
+      <span>Open to Work</span>
+    </div>
+    <div style="margin-top:28px;">
+      <a href="https://drive.google.com/drive/folders/10AzFn46zvttrKl-hAelNzzmuy5F0IVdf?hl=ar" target="_blank" class="cv-btn">
+        ⬇ Download CV
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">Who I Am</h2>
+    <div class="about-quote">
+      "Turning ideas into scalable backend systems."
+    </div>
+    <div class="about-bio">
+      <p>I'm a .NET Backend Developer who enjoys building clean, scalable, and real-world web applications. My journey in programming started at university, where I discovered how much I love turning ideas into working systems.</p>
+      <p>I combine strong technical knowledge with problem-solving skills to deliver reliable systems on time. I thrive on solving problems efficiently and delivering results that make a real impact.</p>
+      <p>I'm continuously improving my skills through projects and teamwork, always looking for new challenges that push me to grow as a developer.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h4>🧹 Clean Code</h4>
+        <p>I write maintainable, readable code that follows best practices and is easy for any team to work with.</p>
+      </div>
+      <div class="about-card">
+        <h4>🧩 Problem Solver</h4>
+        <p>I break down complex problems analytically and deliver efficient, reliable solutions on time.</p>
+      </div>
+      <div class="about-card">
+        <h4>🤝 Team Player</h4>
+        <p>Collaboration is at the core of how I work — I communicate clearly and contribute consistently to shared goals.</p>
+      </div>
+      <div class="about-card">
+        <h4>⏱ On-Time Delivery</h4>
+        <p>I take deadlines seriously and manage my time effectively to ship when it matters most.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">Education</p>
+    <h2 class="section-title">Academic Background</h2>
+    <div class="edu-card">
+      <div class="edu-left">
+        <div class="edu-degree">Bachelor's Degree — Computer Science</div>
+        <div class="edu-school">Faculty of Computers and Artificial Intelligence</div>
+        <div class="edu-uni">Benha University</div>
+        <div class="edu-date">Expected Graduation: 2026 &nbsp;·&nbsp; Cairo, Egypt</div>
+      </div>
+      <div class="edu-badge">2026</div>
+    </div>
+    <div class="edu-desc">
+      During my academic journey, I worked on multiple backend and software development projects, collaborating closely with teammates to build real-world systems. This experience strengthened both my technical knowledge and soft skills, shaping my passion for backend development and scalable, maintainable systems.
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">Skills</p>
+    <h2 class="section-title">Technical Expertise</h2>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <div class="skill-meta"><span class="skill-name">C# / .NET</span><span class="skill-pct">85%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span class="skill-name">OOP Principles</span><span class="skill-pct">90%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span class="skill-name">SQL & Database Design</span><span class="skill-pct">80%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span class="skill-name">Data Structures & Algorithms</span><span class="skill-pct">75%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span class="skill-name">HTML & CSS</span><span class="skill-pct">70%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span class="skill-name">Git & GitHub</span><span class="skill-pct">80%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+      </div>
+    </div>
+    <div class="tools">
+      <span class="tool-badge">Visual Studio</span>
+      <span class="tool-badge">VS Code</span>
+      <span class="tool-badge">Git</span>
+      <span class="tool-badge">GitHub</span>
+      <span class="tool-badge">SQL Server</span>
+      <span class="tool-badge">MySQL</span>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">Experience & Education</p>
+    <h2 class="section-title">Background</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-role">Full Stack Web Development Trainee</div>
+        <div class="tl-org">National Telecommunication Institute (NTI)</div>
+        <div class="tl-date">Jun 2025 — Jul 2025 · Internship</div>
+        <ul class="tl-list">
+          <li>Participated in hands-on full stack web development training</li>
+          <li>Built a complete BlogPost Website as a graduation project with full CRUD functionality</li>
+          <li>Implemented clean UI and database integration using PHP & MySQL</li>
+          <li>Gained experience in real-world project delivery within a professional environment</li>
+        </ul>
+        <div class="tl-chips">
+          <span class="tl-chip">PHP</span>
+          <span class="tl-chip">MySQL</span>
+          <span class="tl-chip">HTML</span>
+          <span class="tl-chip">CSS</span>
+          <span class="tl-chip">CRUD</span>
+          <span class="tl-chip">Git</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-role">Bachelor's Degree — Computer Science</div>
+        <div class="tl-org">Faculty of Computers & Artificial Intelligence, Benha University</div>
+        <div class="tl-date">Expected: 2026</div>
+        <ul class="tl-list">
+          <li>Worked on multiple backend and software development projects</li>
+          <li>Collaborated closely with teammates to build real-world systems</li>
+          <li>Developed passion for backend development and scalable, maintainable systems</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Projects</p>
+    <h2 class="section-title">What I've Built</h2>
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">BlogPost Website</div>
+        <span class="project-status">✓ Completed</span>
+      </div>
+      <div class="project-date">July 2025</div>
+      <div class="project-desc">
+        A full-stack web application that allows users to create, edit, delete, and view blog posts.
+        Built as a graduation project during NTI training, featuring a clean UI and database integration.
+        Demonstrates complete mastery of CRUD operations and backend logic.
+      </div>
+      <div class="tl-chips">
+        <span class="tl-chip">PHP</span>
+        <span class="tl-chip">MySQL</span>
+        <span class="tl-chip">HTML5</span>
+        <span class="tl-chip">CSS3</span>
+        <span class="tl-chip">Bootstrap</span>
+        <span class="tl-chip">CRUD</span>
+      </div>
+    </div>
+    <div class="project-card" style="border-style:dashed; opacity:.6;">
+      <div class="project-name" style="color:var(--muted)">More projects coming soon...</div>
+      <div class="project-date">Stay tuned!</div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <p class="section-label">Achievements</p>
+    <h2 class="section-title">Certifications</h2>
+    <div class="cert-card">
+      <div class="cert-icon">🏅</div>
+      <div>
+        <div class="cert-title">Computer Network Fundamentals</div>
+        <div class="cert-org">MaharaTech — ITIMooca</div>
+        <div class="cert-date">Issued: August 2024</div>
+        <div class="cert-topics">
+          <span class="cert-topic">OSI Model</span>
+          <span class="cert-topic">TCP/IP</span>
+          <span class="cert-topic">Protocols</span>
+          <span class="cert-topic">Network Security</span>
+          <span class="cert-topic">Routing</span>
+          <span class="cert-topic">Subnetting</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Let's Work Together</h2>
+    <p>I'm open to work, internships, and exciting projects.</p>
+    <div class="contact-links">
+      <a class="contact-link" href="https://github.com/AnasAlaaAlganainy" target="_blank">
+        <span class="icon">⬡</span> GitHub
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/anas-alaa-alganainy/" target="_blank">
+        <span class="icon">in</span> LinkedIn
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<fo
